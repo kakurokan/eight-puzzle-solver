@@ -4,7 +4,7 @@ import java.util.List;
 
 class Board implements Ilayout, Cloneable {
     private static final int dim = 3;
-    private int board[][];
+    private int[][] board;
 
     public Board() {
         board = new int[dim][dim];
@@ -87,6 +87,7 @@ class Board implements Ilayout, Cloneable {
     }
 
     private boolean validPosition(int i, int j) {
+        return i >= 0 && i <= 2 && j >= 0 && j <= 2;
     }
 
 }
