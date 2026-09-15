@@ -49,15 +49,37 @@ class Board implements Ilayout, Cloneable {
 
     // These three stubs make explicit the methods required by Ilayout.
     public List<Ilayout> children() {
+        int blankRow = -1;
+        int blankCol = -1;
         List<Ilayout> children = new ArrayList<>();
-
         int i, j;
-        for (i = 0; i < dim; i++) {
+
+        loop1: for (i = 0; i < dim; i++) {
             for (j = 0; j < dim; j++) {
                 if (board[i][j] == 0) {
-                    break;
+                    blankRow = i;
+                    blankCol = j;
+                    break loop1;
                 }
             }
+        }
+        int [][] moves = {
+                {-1,0},
+                {1,0},
+                {0,-1},
+                {0,1}
+        };
+        for (int[] move : moves) {
+            int newRow = blankRow + move[0];
+            int newCol = blankCol + move[1];
+
+            if(validPosition(newRow, newCol)) {
+                Board child = this.clone();
+                child.board[blankRow][blankCol] = child.board[newRow][newCol];
+                child.board[newRow][newCol] = 0;
+                children.add(child);
+            }
+
         }
 
         return children;
@@ -87,7 +109,7 @@ class Board implements Ilayout, Cloneable {
     }
 
     private boolean validPosition(int i, int j) {
-        return i >= 0 && i <= 2 && j >= 0 && j <= 2;
+        return i >= 0 && i < dim && j >= 0 && j < dim;
     }
 
 }
