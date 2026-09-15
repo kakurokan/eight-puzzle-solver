@@ -5,7 +5,6 @@ import java.util.List;
 class Board implements Ilayout, Cloneable {
     private static final int dim = 3;
     private int board[][];
-    private Pointer zeroPosition;
 
     public Board() {
         board = new int[dim][dim];
@@ -18,11 +17,7 @@ class Board implements Ilayout, Cloneable {
         int si = 0;
         for (int i = 0; i < dim; i++)
             for (int j = 0; j < dim; j++) {
-                int n = Character.getNumericValue(str.charAt(si++));
-                board[i][j] = n;
-                if (n == 0) {
-                    zeroPosition = new Pointer(i, j);
-                }
+                board[i][j] = Character.getNumericValue(str.charAt(si++));
             }
     }
 
@@ -55,7 +50,17 @@ class Board implements Ilayout, Cloneable {
     // These three stubs make explicit the methods required by Ilayout.
     public List<Ilayout> children() {
         List<Ilayout> children = new ArrayList<>();
-        
+
+        int i, j;
+        for (i = 0; i < dim; i++) {
+            for (j = 0; j < dim; j++) {
+                if (board[i][j] == 0) {
+                    break;
+                }
+            }
+        }
+
+        return children;
     }
 
     public boolean isGoal(Ilayout l) {
@@ -70,13 +75,20 @@ class Board implements Ilayout, Cloneable {
     public Board clone() {
         try {
             Board clone = (Board) super.clone();
-            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            clone.board = new int[dim][dim];
+
+            for (int i = 0; i < dim; i++)
+                System.arraycopy(this.board[i], 0, clone.board[i], 0, dim);
+
             return clone;
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
     }
 
-    private record Pointer(int i, int j) {
+    private boolean validPosition(int i, int j) {
     }
+
 }
+
+
