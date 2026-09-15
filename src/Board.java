@@ -1,9 +1,11 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 class Board implements Ilayout, Cloneable {
     private static final int dim = 3;
     private int board[][];
+    private Pointer zeroPosition;
 
     public Board() {
         board = new int[dim][dim];
@@ -15,8 +17,13 @@ class Board implements Ilayout, Cloneable {
         board = new int[dim][dim];
         int si = 0;
         for (int i = 0; i < dim; i++)
-            for (int j = 0; j < dim; j++)
-                board[i][j] = Character.getNumericValue(str.charAt(si++));
+            for (int j = 0; j < dim; j++) {
+                int n = Character.getNumericValue(str.charAt(si++));
+                board[i][j] = n;
+                if (n == 0) {
+                    zeroPosition = new Pointer(i, j);
+                }
+            }
     }
 
     public String toString() {
@@ -47,18 +54,16 @@ class Board implements Ilayout, Cloneable {
 
     // These three stubs make explicit the methods required by Ilayout.
     public List<Ilayout> children() {
-        // TODO: Make independent boards for all legal moves.
-        throw new UnsupportedOperationException("TODO: children");
+        List<Ilayout> children = new ArrayList<>();
+        
     }
 
     public boolean isGoal(Ilayout l) {
-        // TODO: Compare this configuration with l.
-        throw new UnsupportedOperationException("TODO: isGoal");
+        return this.equals(l);
     }
 
     public double getK() {
-        // TODO: Return the cost of one move.
-        throw new UnsupportedOperationException("TODO: getK");
+        return 1;
     }
 
     @Override
@@ -70,5 +75,8 @@ class Board implements Ilayout, Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }
+    }
+
+    private record Pointer(int i, int j) {
     }
 }
