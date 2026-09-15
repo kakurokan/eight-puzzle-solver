@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.List;
 
 class Board implements Ilayout, Cloneable {
@@ -34,13 +35,14 @@ class Board implements Ilayout, Cloneable {
     }
 
     public boolean equals(Object o) {
-        // TODO: Compare tile positions; handle null/other types.
-        throw new UnsupportedOperationException("TODO: equals");
+        if (o instanceof Board board1) {
+            return Arrays.deepEquals(board1.board, this.board);
+        }
+        return false;
     }
 
     public int hashCode() {
-        // TODO: Equal boards must have equal hash codes.
-        throw new UnsupportedOperationException("TODO: hashCode");
+        return Arrays.deepHashCode(this.board);
     }
 
     // These three stubs make explicit the methods required by Ilayout.
@@ -57,5 +59,16 @@ class Board implements Ilayout, Cloneable {
     public double getK() {
         // TODO: Return the cost of one move.
         throw new UnsupportedOperationException("TODO: getK");
+    }
+
+    @Override
+    public Board clone() {
+        try {
+            Board clone = (Board) super.clone();
+            // TODO: copy mutable state here, so the clone can't change the internals of the original
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
