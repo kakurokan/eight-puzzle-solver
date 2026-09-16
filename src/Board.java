@@ -52,10 +52,10 @@ class Board implements Ilayout, Cloneable {
         int blankRow = -1;
         int blankCol = -1;
         List<Ilayout> children = new ArrayList<>();
-        int i, j;
 
-        loop1: for (i = 0; i < dim; i++) {
-            for (j = 0; j < dim; j++) {
+        loop1:
+        for (int i = 0; i < dim; i++) {
+            for (int j = 0; j < dim; j++) {
                 if (board[i][j] == 0) {
                     blankRow = i;
                     blankCol = j;
@@ -63,17 +63,17 @@ class Board implements Ilayout, Cloneable {
                 }
             }
         }
-        int [][] moves = {
-                {-1,0},
-                {1,0},
-                {0,-1},
-                {0,1}
+        int[][] moves = {
+                {-1, 0},
+                {1, 0},
+                {0, -1},
+                {0, 1}
         };
         for (int[] move : moves) {
             int newRow = blankRow + move[0];
             int newCol = blankCol + move[1];
 
-            if(validPosition(newRow, newCol)) {
+            if (validPosition(newRow, newCol)) {
                 Board child = this.clone();
                 child.board[blankRow][blankCol] = child.board[newRow][newCol];
                 child.board[newRow][newCol] = 0;

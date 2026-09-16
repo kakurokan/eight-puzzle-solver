@@ -19,9 +19,17 @@ class BestFirst {
             else g = 0.0;
         }
 
-        public String toString() { return layout.toString(); }
-        public double getG() { return g; }
-        public int hashCode() { return toString().hashCode(); }
+        public String toString() {
+            return layout.toString();
+        }
+
+        public double getG() {
+            return g;
+        }
+
+        public int hashCode() {
+            return toString().hashCode();
+        }
 
         public boolean equals(Object o) {
             if (o == null) return false;
@@ -46,11 +54,10 @@ class BestFirst {
     final public Iterator<State> solve(Ilayout s, Ilayout goal) {
         objective = goal;
         abertos = new PriorityQueue<>(10,
-            (s1, s2) -> (int) Math.signum(s1.getG() - s2.getG()));
+                (s1, s2) -> (int) Math.signum(s1.getG() - s2.getG()));
         fechados = new HashMap<>();
         abertos.add(new State(s, null));
         List<State> sucs;
-        // TODO: Complete the search using the diagram in the guide.
-        throw new UnsupportedOperationException("TODO: solve");
+
     }
 }
