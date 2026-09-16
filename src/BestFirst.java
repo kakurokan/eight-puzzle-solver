@@ -64,7 +64,7 @@ class BestFirst {
             actual = abertos.poll();
 
             if (actual.layout.isGoal(this.objective)) {
-                List<State> path = new ArrayList();
+                List<State> path = new ArrayList<>();
                 State temp = actual;
                 while (temp != null) {
                     path.add(temp);
