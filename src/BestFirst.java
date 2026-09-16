@@ -59,5 +59,23 @@ class BestFirst {
         abertos.add(new State(s, null));
         List<State> sucs;
 
+
+        while (!abertos.isEmpty()) {
+
+            actual = abertos.poll();
+
+            if (actual.layout.isGoal(this.objective)) {
+                
+            } else {
+                fechados.put(actual.layout, actual);
+                sucs = this.sucessores(actual);
+                for (State child : sucs) {
+                    if (!fechados.containsKey(child.layout)) {
+                        abertos.add(child);
+                    }
+                }
+            }
+        }
+        return null;
     }
 }
