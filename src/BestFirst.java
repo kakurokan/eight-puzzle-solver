@@ -59,18 +59,24 @@ class BestFirst {
         abertos.add(new State(s, null));
         List<State> sucs;
 
-
         while (!abertos.isEmpty()) {
 
             actual = abertos.poll();
 
             if (actual.layout.isGoal(this.objective)) {
-                
+                List<State> path = new ArrayList();
+                State temp = actual;
+                while (temp != null) {
+                    path.add(temp);
+                    temp = temp.father;
+                }
+                Collections.reverse(path);
+                return path.iterator();
             } else {
                 fechados.put(actual.layout, actual);
                 sucs = this.sucessores(actual);
                 for (State child : sucs) {
-                    if (!fechados.containsKey(child.layout)) {
+                    if (!fechados.containsKey(child.layout) && !abertos.contains(child)) {
                         abertos.add(child);
                     }
                 }
