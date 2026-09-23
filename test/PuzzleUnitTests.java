@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PuzzleUnitTests {
@@ -33,50 +34,50 @@ public class PuzzleUnitTests {
     }
 
     @Test
-    public void equals(){
+    public void equals() {
         Board b = new Board("876543210");
         Object o = new Board("876543210");
         assertEquals(b, o);
     }
 
     @Test
-    public void diferentes(){
+    public void diferentes() {
         Board b = new Board("678543210");
         Object o = new Board("876543210");
         assertNotEquals(b, o);
     }
 
     @Test
-    public void identidade(){
+    public void identidade() {
         Board b = new Board("876543210");
         assertEquals(b, b);
     }
 
     @Test
-    public void nulo(){
+    public void nulo() {
         Board b = new Board("678543210");
         assertNotEquals(null, b);
     }
 
     @Test
-    public void Clone(){
+    public void Clone() {
         Board a = new Board("023145678");
         Board b = a.clone();
-        assertEquals(a,b);
+        assertEquals(a, b);
     }
 
     @Test
-    public void codigo_hash(){
+    public void deveTerCodigoHashIgualNosDoisBoards() {
         Board a = new Board("023145678");
         Board b = a.clone();
-        assertEquals(a.hashCode(),b.hashCode());
+        assertEquals(a.hashCode(), b.hashCode());
     }
 
     @Test
-    public void Teste_children_2_movimentos(){
+    public void deveGarantirQueOTamanhoDaListaSejaIgualAoNumeroDeMovimentosPossiveis_2_Movimentos() {
         Board b = new Board("012345678");
         List<Ilayout> filhos = b.children();
-        assertEquals(2,filhos.size());
+        assertEquals(2, filhos.size());
 
         Board c = new Board("102345678");
         Board d = new Board("312045678");
@@ -85,60 +86,60 @@ public class PuzzleUnitTests {
     }
 
     @Test
-    public void Teste_children_3_movimentos(){
+    public void deveGarantirQueOTamanhoDaListaSejaIgualAoNumeroDeMovimentosPossiveis_3_Movimentos() {
         Board b = new Board("102345678");
         List<Ilayout> filhos = b.children();
-        assertEquals(3,filhos.size());
+        assertEquals(3, filhos.size());
     }
 
     @Test
-    public void Teste_children_4_movimentos(){
+    public void deveGarantirQueOTamanhoDaListaSejaIgualAoNumeroDeMovimentosPossiveis_4_Movimentos() {
         Board b = new Board("123405678");
         List<Ilayout> filhos = b.children();
-        assertEquals(4,filhos.size());
+        assertEquals(4, filhos.size());
     }
 
     @Test
-    public void test_solve_1(){
+    public void deveGarantirQueOCaminhoRetornadoTenhaTresEstadosParaUmPuzzleSimples() {
         int contador = 0;
         Board inicial = new Board("123456078");
         Board objectivo = new Board("123456780");
 
         BestFirst best = new BestFirst();
-        Iterator<BestFirst.State> res = best.solve(inicial,objectivo);
+        Iterator<BestFirst.State> res = best.solve(inicial, objectivo);
 
         assertNotNull(res);
-        while(res.hasNext()){
+        while (res.hasNext()) {
             contador++;
             res.next();
         }
-        assertEquals(3,contador);
+        assertEquals(3, contador);
     }
 
     @Test
-    public void test_solve_2(){
+    public void deveGarantirQueOCaminhoRetornadoTenhaUmEstadosParaUmPuzzleSimples() {
         int contador = 0;
         Board inicial = new Board("123456780");
         Board objectivo = new Board("123456780");
 
         BestFirst best = new BestFirst();
-        Iterator<BestFirst.State> res = best.solve(inicial,objectivo);
+        Iterator<BestFirst.State> res = best.solve(inicial, objectivo);
 
         assertNotNull(res);
-        while(res.hasNext()){
+        while (res.hasNext()) {
             contador++;
             res.next();
         }
-        assertEquals(1,contador);
+        assertEquals(1, contador);
     }
 
     @Test
-    public void test_solve_3(){
+    public void DeveRetornarNuloQuandoNaoHaUmaSolucaoPossivel() {
         Board inicial = new Board("123456870");
         Board objectivo = new Board("123456780");
 
         BestFirst best = new BestFirst();
-        Iterator<BestFirst.State> res = best.solve(inicial,objectivo);
+        Iterator<BestFirst.State> res = best.solve(inicial, objectivo);
 
         assertNull(res);
     }
